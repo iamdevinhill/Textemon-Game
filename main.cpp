@@ -19,7 +19,7 @@ int hp = 0;
 void outputHealth(string Textemon, int x);
 int loudSoundPunch(string Textemon, int x);
 int specialBeamAttack(string Textemon, int x);
-int bandaids(string Textemon);
+int bandaids(string Textemon, int x);
 void runAway();
 int aiAttack(string ai_select);
 int userAttack(string user_select);
@@ -55,13 +55,22 @@ int main() {
 
    // attack decisions
    if (attack_choice > 0 && attack_choice < 5){
+   // if (attack_choice > 0 && attack_choice < 3){
    damage = userAttack(user_select);
     ai_healthhp -= damage;
     user_healthhp -= damage;
-      
    outputHealth(ai_select, ai_healthhp);
    outputHealth(user_select, user_healthhp);
    aiAttack(ai_select);
+     // maybe fixes bandaids? ---------------------
+   //   } else if (attack_choice == 3){
+   //   damage = userAttack(user_select);
+   //  ai_healthhp += damage;
+   //  user_healthhp += damage;
+   // outputHealth(ai_select, ai_healthhp);
+   // outputHealth(user_select, user_healthhp);
+   // aiAttack(ai_select);
+     // --------------------------------------------
      } else {
      cout << "Please select a valid ability!" << endl;
      cout << endl;
@@ -97,13 +106,14 @@ int specialBeamAttack(string Textemon, int hp){
     return hp; 
   }
 
-int bandaids(string Textemon){
-    int rand_hp = rand() % (10 - 4);
+int bandaids(string Textemon, int hp){
+    int rand_hp = rand() % 10 - 4;
     cout << Textemon << " performed BANDAID!" << endl;
     cout << endl;
     cout << endl;
     cout << endl;
-    return rand_hp;
+    hp = rand_hp;
+    return hp;
   }
 
 void runAway(string Textemon){
@@ -129,7 +139,7 @@ int aiAttack(string ai_select){
      hp = specialBeamAttack(ai_select, hp);
     return hp;
     } else if (rand_attack == 3){
-     bandaids(ai_select);
+     bandaids(ai_select, hp);
     } else if (rand_attack == 4){
      runAway(ai_select);
     } else {
@@ -147,11 +157,12 @@ int userAttack(string user_select){
      hp = specialBeamAttack(user_select, hp);
     return hp;
     } else if (attack_choice == 3){
-     bandaids(user_select);
+     bandaids(user_select, hp);
     } else if (attack_choice == 4){
      runAway(user_select);
     } else {
      cout << "Please select a valid ability!" << endl;
      }
 }
+
 
